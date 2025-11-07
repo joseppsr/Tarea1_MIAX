@@ -65,72 +65,72 @@
 │                        @dataclass                               │
 │                                                                 │
 │                    PricePoint                                   │
-│  - date: datetime                                              │
-│  - open: float                                                 │
-│  - high: float                                                 │
-│  - low: float                                                  │
-│  - close: float                                                │
-│  - volume: Optional[int]                                       │
+│  - date: datetime                                               │
+│  - open: float                                                  │
+│  - high: float                                                  │ 
+│  - low: float                                                   │
+│  - close: float                                                 │
+│  - volume: Optional[int]                                        │
 │                                                                 │
-│  + __post_init__() : void (validación)                        │
+│  + __post_init__() : void (validación)                          │
 └─────────────────────────────────────────────────────────────────┘
                               ▲
                               │
                               │ composición (1 a muchos)
                               │
                               │
-┌──────────────────────────────┴─────────────────────────────────┐
-│                        @dataclass                               │
-│                                                                 │
-│                    PriceSeries                                  │
-│  - symbol: str                                                 │
-│  - name: str                                                   │
-│  - data: List[PricePoint]                                      │
-│  - source: str                                                 │
-│  - currency: str                                                │
-│  - _mean_return: Optional[float] (auto)                        │
+┌─────────────────────────────┴─────────────────────────────────┐
+│                        @dataclass                             │
+│                                                               │
+│                    PriceSeries                                │
+│  - symbol: str                                                │
+│  - name: str                                                  │
+│  - data: List[PricePoint]                                     │
+│  - source: str                                                │
+│  - currency: str                                              │
+│  - _mean_return: Optional[float] (auto)                       │
 │  - _std_return: Optional[float] (auto)                        │
 │  - _returns: Optional[pd.Series] (auto)                       │
-│                                                                 │
+│                                                               │
 │  + __post_init__() : void (calc stats)                        │
 │  + _calculate_statistics() : void                             │
 │  + mean_return : float (property)                             │
 │  + std_return : float (property)                              │
-│  + returns : pd.Series (property)                              │
+│  + returns : pd.Series (property)                             │
 │  + add_data_point(point: PricePoint) : void                   │
 │  + to_dataframe() : pd.DataFrame                              │
 │  + get_period() : Optional[tuple]                             │
 │  + get_latest_price() : Optional[float]                       │
-│  + annualized_return() : Optional[float]                       │
-│  + volatility() : Optional[float]                              │
+│  + annualized_return() : Optional[float]                      │
+│  + volatility() : Optional[float]                             │
 │  + sharpe_ratio() : Optional[float]                           │
 │  + max_drawdown() : Optional[float]                           │
 │  + clean_data() : PriceSeries                                 │
-│  + monte_carlo_simulation() : Dict[str, Any]                 │
+│  + monte_carlo_simulation() : Dict[str, Any]                  │
 │  + plot_monte_carlo() : void                                  │
-└─────────────────────────────────────────────────────────────────┘
+└───────────────────────────────────────────────────────────────┘
                               ▲
                               │
                               │ composición (1 a muchos)
                               │
                               │
-┌──────────────────────────────┴─────────────────────────────────┐
-│                        @dataclass                               │
-│                                                                 │
-│                    Portfolio                                    │
-│  - name: str                                                   │
-│  - holdings: Dict[str, float]  (symbol → weight)              │
-│  - price_series: Dict[str, PriceSeries]                        │
-│                                                                 │
-│  + add_holding(symbol, weight, series) : void                  │
-│  + remove_holding(symbol) : void                              │
-│  + get_portfolio_returns() : Optional[pd.Series]              │
-│  + get_portfolio_value_series(valor_inicial) : Optional[pd.Series]│
-│  + monte_carlo_simulation(dias, simulaciones, ...) : Dict     │
-│  + plot_monte_carlo(dias, simulaciones, mostrar_bandas) : void│
-│  + report() : str (Markdown) - DEPRECATED                     │
-│  + plots_report(ruta_guardado, mostrar) : void                │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────┴───────────────────────────────────────┐
+│                        @dataclass                                   │
+│                                                                     │
+│                    Portfolio                                        │ 
+│  - name: str                                                        │
+│  - holdings: Dict[str, float]  (symbol → weight)                    │
+│  - price_series: Dict[str, PriceSeries]                             │
+│                                                                     │
+│  + add_holding(symbol, weight, series) : void                       │
+│  + remove_holding(symbol) : void                                    │
+│  + get_portfolio_returns() : Optional[pd.Series]                    │
+│  + get_portfolio_value_series(valor_inicial) : Optional[pd.Series]  │
+│  + monte_carlo_simulation(dias, simulaciones, ...) : Dict           │
+│  + plot_monte_carlo(dias, simulaciones, mostrar_bandas) : void      │
+│  + report() : str (Markdown) - DEPRECATED                           │
+│  + plots_report(ruta_guardado, mostrar) : void                      │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Relaciones entre Clases
