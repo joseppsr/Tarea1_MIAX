@@ -1,25 +1,27 @@
 # Tarea1_MIAX
 
-Herramientas profesionales para la obtención y análisis de información bursátil.
+Herramienta para la obtención y análisis de acciones e índices.
 
 ## Descripción
 
 Este proyecto proporciona un conjunto completo de herramientas para:
-- **Extracción de datos** desde múltiples fuentes (APIs) con formato estandarizado
-- **Análisis estadístico** automático de series de precios
-- **Gestión de carteras** con cálculos avanzados
-- **Simulación de Monte Carlo** para proyecciones
-- **Generación de reportes** en Markdown y visualizaciones
+- **Extracción de datos** desde dos fuentes (APIs) con formato estandarizado. (Yahoo finance y Alpha Vantage)
+- **Análisis estadístico** automático de series de precios.
+- **Gestión de carteras** con cálculos estadísticos de estas.
+- **Simulación de Monte Carlo** para proyecciones.
+- **Generación de reportes** en Markdown y visualizaciones.
 
 ## Arquitectura
 
-El proyecto está diseñado con **buenas prácticas** y **principios sólidos de ingeniería de software**:
-- **Estandarización**: Formato de salida uniforme independiente de la fuente
-- **Abstracción**: Interfaces claras que permiten extensibilidad
-- **Separación de responsabilidades**: Módulos con funciones bien definidas
-- **Automatización**: Cálculos estadísticos automáticos
-- **Configuración centralizada**: Todo se configura desde `configuracion_parametros.py`
-
+El proyecto está diseñado con las siguientes características:
+- **Estructura**: Organización clara y modular
+- **Estandarización**: Formato de salida uniforme independiente de la fuente.
+- **Abstracción**: Interfaces claras que permiten extensibilidad.
+- **Separación de responsabilidades**: Módulos con funciones bien definidas.
+- **Automatización**: Cálculos estadísticos automáticos.
+- **Configuración centralizada**: Todo los parametros se configura desde `configuracion_parametros.py`.
+- **Seguridad**: API keys protegidas en `.env` (no versionado)
+- **Plug and play**: haciendo que tras la instalación sea lo más facil posible su uso.
 ## Instalación
 
 ### Requisitos Previos
@@ -53,26 +55,23 @@ El proyecto está diseñado con **buenas prácticas** y **principios sólidos de
    ```bash
    pip install -r requirements.txt
    ```
+### Archivo `.env`
 
-### Instalación Automática usar los scripts de la cappeta set up:
+Para proteger tus API keys, usa el archivo `.env`:
 
-**Windows:**
-```bash
-setup.bat
-```
+1. Copia `.env.example` a `.env`:
+   ```bash
+   cp .env.example .env
+   ```
 
-**Linux/Mac:**
-```bash
-chmod +x setup.sh
-./setup.sh
-```
+2. Edita `.env` y añade tus API keys:
+   ```
+   ALPHA_VANTAGE_API_KEY=tu_clave_real_aqui
+   ```
 
-El script automáticamente:
-- Verifica que Python esté instalado
-- Crea el entorno virtual
-- Instala todas las dependencias
-- Crea el archivo `.env` desde `.env.example`
+3. El archivo `.env` está en `.gitignore` y **NO se subirá a GitHub**.
 
+**Importante**: Las API keys se cargan automáticamente desde `.env` cuando ejecutas `main.py`. No necesitas modificar código.
 ### Verificación del Entorno
 
 Después de la instalación, puedes verificar que todo esté correcto:
@@ -82,11 +81,11 @@ python check_setup.py
 ```
 
 Este script verifica:
-- Versión de Python
-- Entorno virtual
-- Dependencias instaladas
-- Archivos necesarios
-- Configuración básica
+- Versión de Python.
+- Entorno virtual.
+- Dependencias instaladas.
+- Archivos necesarios.
+- Configuración básica.
 
 ##  Estructura del Proyecto
 
@@ -106,9 +105,6 @@ Tarea1_MIAX/
 ├── .env                    # API keys reales (NO se sube a GitHub)
 ├── venv/                   # Entorno virtual
 ├── requirements.txt        # Dependencias del proyecto
-├──setup/
-│      ├── setup.bat        # Script de instalación automática (Windows)
-│     ├── setup.sh          # Script de instalación automática (Linux/Mac)
 ├── check_setup.py    # Script de verificación del entorno
 ├── LICENSE                 # Licencia del proyecto
 └── README.md               # Este archivo
@@ -137,7 +133,7 @@ Tarea1_MIAX/
    - `FECHA_INICIO_EXTRACCION` / `FECHA_FIN_EXTRACCION`: Período de datos
    - `DIAS_MONTE_CARLO`: Días a simular hacia adelante
    - `NUM_SIMULACIONES_MONTE_CARLO`: Número de simulaciones
-   - Y muchos más parámetros, todos ellos explicados dentro del documento así como ejemplo de otras posibles carteras.
+   - Y muchos más parámetros, todos ellos explicados en el siguiente punto, así como ejemplo de otras posibles carteras.
 
 3. **Ejecutar**:
    ```bash
@@ -145,72 +141,65 @@ Tarea1_MIAX/
    ```
 
 El script ejecutará automáticamente:
-- Extracción de datos de las APIs configuradas
-- Limpieza y preprocesado de datos
-- Creación de la cartera con los pesos especificados
-- Generación de reportes en Markdown
-- Visualizaciones (gráficos guardados en `plots/`)
-- Simulación de Monte Carlo con gráficos
+- Extracción de datos de las APIs configuradas.
+- Limpieza y preprocesado de datos.
+- Creación de la cartera con los pesos especificados.
+- Generación de reportes en Markdown.
+- Visualizaciones (gráficos guardados en `plots/`).
+- Simulación de Monte Carlo con gráficos.
 
-### Ejemplo de Configuración
+##  Configuración Detallada
 
-Edita `configuracion_parametros.py`:
+### Archivo `configuracion_parametros.py`
 
-```python
-# Tickers de acciones
-TICKERS_ACCIONES = ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA"]
+Este es el archivo central de configuración. Aquí puedes especificar:
 
-# Índices
-INDICES = ["sp500", "dowjones", "nasdaq"]
+#### Tickers e Índices
+- `TICKERS_ACCIONES`: Lista de símbolos de acciones (ej: `["AAPL", "MSFT"]`)
+- `INDICES`: Lista de índices (ej: `["sp500", "dowjones", "nasdaq"]`)
 
-# Pesos de la cartera (deben sumar ≤ 1.0)
-PESOS_CARTERA = {
-    "AAPL": 0.25,
-    "MSFT": 0.25,
-    "GOOGL": 0.20,
-    "AMZN": 0.15,
-    "TSLA": 0.10,
-    "^GSPC": 0.05,  # S&P 500
-}
+#### Períodos de Tiempo
+- `FECHA_INICIO_EXTRACCION`: Fecha de inicio (None = 1 año atrás desde hoy)
+- `FECHA_FIN_EXTRACCION`: Fecha de fin (None = hoy)
+- `DIAS_MONTE_CARLO`: Días a simular hacia adelante (default: 252)
 
-# Período de extracción (None = automático)
-FECHA_INICIO_EXTRACCION = None  # 1 año atrás desde hoy
-FECHA_FIN_EXTRACCION = None     # Hoy
+#### Monte Carlo
+- `TIPO_MONTE_CARLO`: Tipo de simulación ("cartera", "accion_individual", "todos_los_elementos", "seleccion_elementos")
+- `SIMBOLO_MONTE_CARLO`: Símbolo para simulación individual (si TIPO_MONTE_CARLO="accion_individual")
+- `SIMBOLOS_MONTE_CARLO`: Lista de símbolos para simulación seleccionada (si TIPO_MONTE_CARLO="seleccion_elementos")
+- `NUM_SIMULACIONES_MONTE_CARLO`: Número de simulaciones (default: 1000)
+- `VALOR_INICIAL_CARTERA`: Valor inicial para simulación (default: 10000.0)
+- `NIVELES_CONFIANZA`: Percentiles a calcular (default: [0.05, 0.25, 0.50, 0.75, 0.95])
+- `MOSTRAR_BANDAS_CONFIANZA`: Mostrar bandas de confianza en gráficos (default: False)
 
-# Monte Carlo
-DIAS_MONTE_CARLO = 252  # 1 año de trading
-NUM_SIMULACIONES_MONTE_CARLO = 1000
-VALOR_INICIAL_CARTERA = 10000.0
-```
+#### Cartera
+- `NOMBRE_CARTERA`: Nombre de la cartera
+- `PESOS_CARTERA`: Diccionario {símbolo: peso} (deben sumar ≤ 1.0)
 
-### Uso Programático (Avanzado)
+#### APIs
+- `API_POR_DEFECTO`: API a usar por defecto ('yahoo', 'alphavantage')
+- `MAPEO_SIMBOLO_API`: Especificar API para cada símbolo (opcional)
 
-Si prefieres usar el código directamente en lugar de `main.py`:
+#### Reportes y Visualizaciones
+- `TASA_LIBRE_RIESGO`: Tasa libre de riesgo (default: 0.02 = 2%)
+- `RUTA_GUARDADO_GRAFICOS`: Carpeta para guardar gráficos (default: "plots")
+- `MOSTRAR_GRAFICOS`: Mostrar gráficos en pantalla (default: False)
 
-```python
-from datetime import datetime, timedelta
-from src.extractor import DataExtractorFactory
-from src.portfolio import Portfolio
-from src.report import generate_report
+#### Limpieza de Datos
+- `ELIMINAR_DUPLICADOS`: Eliminar puntos duplicados (default: True)
+- `ELIMINAR_OUTLIERS`: Eliminar outliers (default: True)
+- `UMBRAL_OUTLIER`: Número de desviaciones estándar para considerar outlier (default: 3.0)
 
-# Crear extractor
-extractor = DataExtractorFactory.get_default_extractor()
+#### Extracción Paralela
+- `EXTRACCION_PARALELA`: Extraer datos en paralelo (default: True)
+- `MAX_WORKERS_EXTRACCION`: Número máximo de workers paralelos (default: 5)
 
-# Obtener datos
-simbolos = ["AAPL", "MSFT"]
-fecha_inicio = datetime.now() - timedelta(days=365)
-fecha_fin = datetime.now()
-series_dict = extractor.fetch_multiple_series(simbolos, fecha_inicio, fecha_fin)
+#### Datos Adicionales
+- `EXTRAER_DATOS_FUNDAMENTALES`: Extraer datos fundamentales (P/E, P/B, etc.) (default: False)
+- `EXTRAER_DIVIDENDOS`: Extraer historial de dividendos (default: False)
+- `EXTRAER_INDICADORES_TECNICOS`: Extraer indicadores técnicos (default: False)
 
-# Crear cartera
-cartera = Portfolio(name="Mi Cartera")
-cartera.add_holding(simbolo="AAPL", peso=0.50, serie_precios=series_dict["AAPL"])
-cartera.add_holding(simbolo="MSFT", peso=0.50, serie_precios=series_dict["MSFT"])
-
-# Generar reporte
-reporte = generate_report(cartera)
-print(reporte)
-```
+**Nota**: Si `EXTRAER_DATOS_FUNDAMENTALES` o `EXTRAER_DIVIDENDOS` son `True`, los datos se imprimirán automáticamente por pantalla.
 
 ##  Extractores de Datos
 
@@ -438,92 +427,6 @@ serie.clean_data(
 
 Esto se ejecuta automáticamente en `main.py` según la configuración en `configuracion_parametros.py`.
 
-##  Configuración Detallada
-
-### Archivo `configuracion_parametros.py`
-
-Este es el archivo central de configuración. Aquí puedes especificar:
-
-#### Tickers e Índices
-- `TICKERS_ACCIONES`: Lista de símbolos de acciones (ej: `["AAPL", "MSFT"]`)
-- `INDICES`: Lista de índices (ej: `["sp500", "dowjones", "nasdaq"]`)
-
-#### Períodos de Tiempo
-- `FECHA_INICIO_EXTRACCION`: Fecha de inicio (None = 1 año atrás desde hoy)
-- `FECHA_FIN_EXTRACCION`: Fecha de fin (None = hoy)
-- `DIAS_MONTE_CARLO`: Días a simular hacia adelante (default: 252)
-
-#### Monte Carlo
-- `TIPO_MONTE_CARLO`: Tipo de simulación ("cartera", "accion_individual", "todos_los_elementos", "seleccion_elementos")
-- `SIMBOLO_MONTE_CARLO`: Símbolo para simulación individual (si TIPO_MONTE_CARLO="accion_individual")
-- `SIMBOLOS_MONTE_CARLO`: Lista de símbolos para simulación seleccionada (si TIPO_MONTE_CARLO="seleccion_elementos")
-- `NUM_SIMULACIONES_MONTE_CARLO`: Número de simulaciones (default: 1000)
-- `VALOR_INICIAL_CARTERA`: Valor inicial para simulación (default: 10000.0)
-- `NIVELES_CONFIANZA`: Percentiles a calcular (default: [0.05, 0.25, 0.50, 0.75, 0.95])
-- `MOSTRAR_BANDAS_CONFIANZA`: Mostrar bandas de confianza en gráficos (default: False)
-
-#### Cartera
-- `NOMBRE_CARTERA`: Nombre de la cartera
-- `PESOS_CARTERA`: Diccionario {símbolo: peso} (deben sumar ≤ 1.0)
-
-#### APIs
-- `API_POR_DEFECTO`: API a usar por defecto ('yahoo', 'alphavantage')
-- `MAPEO_SIMBOLO_API`: Especificar API para cada símbolo (opcional)
-
-#### Reportes y Visualizaciones
-- `TASA_LIBRE_RIESGO`: Tasa libre de riesgo (default: 0.02 = 2%)
-- `RUTA_GUARDADO_GRAFICOS`: Carpeta para guardar gráficos (default: "plots")
-- `MOSTRAR_GRAFICOS`: Mostrar gráficos en pantalla (default: False)
-
-#### Limpieza de Datos
-- `ELIMINAR_DUPLICADOS`: Eliminar puntos duplicados (default: True)
-- `ELIMINAR_OUTLIERS`: Eliminar outliers (default: True)
-- `UMBRAL_OUTLIER`: Número de desviaciones estándar para considerar outlier (default: 3.0)
-
-#### Extracción Paralela
-- `EXTRACCION_PARALELA`: Extraer datos en paralelo (default: True)
-- `MAX_WORKERS_EXTRACCION`: Número máximo de workers paralelos (default: 5)
-
-#### Datos Adicionales
-- `EXTRAER_DATOS_FUNDAMENTALES`: Extraer datos fundamentales (P/E, P/B, etc.) (default: False)
-- `EXTRAER_DIVIDENDOS`: Extraer historial de dividendos (default: False)
-- `EXTRAER_INDICADORES_TECNICOS`: Extraer indicadores técnicos (default: False)
-
-**Nota**: Si `EXTRAER_DATOS_FUNDAMENTALES` o `EXTRAER_DIVIDENDOS` son `True`, los datos se imprimirán automáticamente por pantalla.
-
-### Archivo `.env`
-
-Para proteger tus API keys, usa el archivo `.env`:
-
-1. Copia `.env.example` a `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-
-2. Edita `.env` y añade tus API keys:
-   ```
-   ALPHA_VANTAGE_API_KEY=tu_clave_real_aqui
-   ```
-
-3. El archivo `.env` está en `.gitignore` y **NO se subirá a GitHub**.
-
-**Importante**: Las API keys se cargan automáticamente desde `.env` cuando ejecutas `main.py`. No necesitas modificar código.
-
-##  Extensibilidad
-
-### Añadir Nuevo Extractor
-
-1. Crear clase que herede de `DataExtractor`
-2. Implementar `fetch_historical_prices(simbolo, fecha_inicio, fecha_fin)` y `fetch_multiple_series()`
-3. Asegurar que devuelve `PriceSeries` estandarizado
-4. Añadir método factory en `DataExtractorFactory`
-
-### Añadir Nuevo Tipo de Análisis
-
-1. Añadir método a `PriceSeries` o `Portfolio`
-2. Asegurar que usa el formato estandarizado
-3. Documentar en el método
-
 ##  Notas Importantes
 
 ### Datos Ajustados (Adjusted Close)
@@ -543,7 +446,7 @@ Si un extractor no encuentra datos ajustados, usará datos sin ajustar y mostrar
   - No requiere API key
   - Puede tener limitaciones de rate. Si encuentras errores 429, espera unos minutos
 - **Alpha Vantage**: 
-  - Límite de 5 llamadas por minuto (API free)
+  - Límite de 5 llamadas por minuto y hasta 25 al dia con la versión gratuita
   - Puede causar errores 429 si se excede el límite
 
 ### Otros Aspectos Importantes
@@ -554,16 +457,6 @@ Si un extractor no encuentra datos ajustados, usará datos sin ajustar y mostrar
 - **Ejecución simple**: Solo ejecuta `python main.py` después de configurar
 - **Multi-API**: Puedes usar múltiples APIs simultáneamente mapeando símbolos específicos a APIs específicas
 
-## Decisiones de Diseño
-
-Este proyecto valora:
-- **Estructura**: Organización clara y modular
-- **Abstracciones**: Interfaces que permiten crecimiento
-- **Estandarización**: Formato uniforme facilita mantenimiento
-- **Automatización**: Cálculos básicos automáticos
-- **Extensibilidad**: Fácil añadir nuevas funcionalidades
-- **Configuración centralizada**: Un solo archivo (`configuracion_parametros.py`) para toda la configuración
-- **Seguridad**: API keys protegidas en `.env` (no versionado)
 
 ## Licencia
 
