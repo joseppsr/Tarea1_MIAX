@@ -1,6 +1,6 @@
 # Tarea1_MIAX
 
-Herramienta para la obtención y análisis de acciones e índices.
+Herramienta para la obtención y análisis de información bursatil.
 
 ## Tabla de Contenidos
 
