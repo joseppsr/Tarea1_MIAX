@@ -96,19 +96,20 @@ Tarea1_MIAX/
 │   ├── __init__.py
 │   ├── data_classes.py     # DataClasses para series de precios
 │   ├── extractor.py        # Extractores de datos de múltiples APIs
-│   ├── portfolio.py         # Clase Portfolio y métodos de análisis
-│   ├── report.py            # Generación de reportes (módulo separado)
-│   ├── indices.py           # Utilidades para índices
-│   └── validation.py       # Validación de configuración
-├── configuracion_parametros.py  # ⚙️ CONFIGURACIÓN: Tickers, índices, períodos, etc.
-├── main.py                  # Script principal (ejecuta todo automáticamente)
+│   ├── portfolio.py        # Clase Portfolio y métodos de análisis
+│   ├── report.py           # Generación de reportes del portfolio
+│   ├── indices.py          # Utilidades para índices, nomenclatura, etc
+│   └── validation.py       # Validación del documento configuración_parametros
+├── configuracion_parametros.py  # CONFIGURACIÓN: Tickers, índices, períodos, etc.  (Todos los parametros más importantes para ser plug and play)
+├── main.py                  # Script principal (ejecuta todo automáticamente solo con poner 'python main.py' )
 ├── .env.example            # Plantilla para API keys (copiar a .env)
 ├── .env                    # API keys reales (NO se sube a GitHub)
-├── venv/                   # Entorno virtual (no versionado)
+├── venv/                   # Entorno virtual
 ├── requirements.txt        # Dependencias del proyecto
-├── setup.bat               # Script de instalación automática (Windows)
-├── setup.sh                # Script de instalación automática (Linux/Mac)
-├── check_setup.py          # Script de verificación del entorno
+├──setup/
+│      ├── setup.bat        # Script de instalación automática (Windows)
+│     ├── setup.sh          # Script de instalación automática (Linux/Mac)
+├── check_setup.py    # Script de verificación del entorno
 ├── LICENSE                 # Licencia del proyecto
 └── README.md               # Este archivo
 ```
@@ -132,18 +133,18 @@ Tarea1_MIAX/
    Edita `configuracion_parametros.py` y ajusta según tus necesidades:
    - `TICKERS_ACCIONES`: Lista de acciones a analizar
    - `INDICES`: Lista de índices a analizar
-   - `PESOS_CARTERA`: Pesos de cada holding en la cartera
+   - `PESOS_CARTERA`: Pesos de cada valor/holding en la cartera
    - `FECHA_INICIO_EXTRACCION` / `FECHA_FIN_EXTRACCION`: Período de datos
    - `DIAS_MONTE_CARLO`: Días a simular hacia adelante
    - `NUM_SIMULACIONES_MONTE_CARLO`: Número de simulaciones
-   - Y muchos más parámetros...
+   - Y muchos más parámetros, todos ellos explicados dentro del documento así como ejemplo de otras posibles carteras.
 
 3. **Ejecutar**:
    ```bash
    python main.py
    ```
 
-¡Eso es todo! El script ejecutará automáticamente:
+El script ejecutará automáticamente:
 - Extracción de datos de las APIs configuradas
 - Limpieza y preprocesado de datos
 - Creación de la cartera con los pesos especificados
