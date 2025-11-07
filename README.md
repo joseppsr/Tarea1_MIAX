@@ -2,14 +2,35 @@
 
 Herramienta para la obtención y análisis de acciones e índices.
 
+## Tabla de Contenidos
+
+- [Descripción](#descripción)
+- [Arquitectura](#arquitectura)
+- [Instalación](#instalación)
+  - [Requisitos Previos](#requisitos-previos)
+  - [Configuración del Entorno Virtual](#configuración-del-entorno-virtual)
+  - [Archivo `.env`](#archivo-env)
+  - [Verificación del Entorno](#verificación-del-entorno)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Uso](#uso)
+  - [Configuración Rápida](#configuración-rápida)
+- [Configuración Detallada](#configuración-detallada)
+- [Módulos de `src/` en Orden de Ejecución](#módulos-de-src-en-orden-de-ejecución)
+- [Simulación de Monte Carlo](#simulación-de-monte-carlo)
+- [Reportes](#reportes)
+- [Limpieza y Preprocesado](#limpieza-y-preprocesado)
+- [Notas Importantes](#notas-importantes)
+- [Licencia](#licencia)
+- [Contribuciones](#contribuciones)
+
 ## Descripción
 
 Este proyecto proporciona un conjunto completo de herramientas para:
-- **Extracción de datos** desde dos fuentes (APIs) con formato estandarizado. (Yahoo finance y Alpha Vantage)
-- **Análisis estadístico** automático de series de precios.
-- **Gestión de carteras** con cálculos estadísticos de estas.
-- **Simulación de Monte Carlo** para proyecciones.
-- **Generación de reportes** en Markdown y visualizaciones.
+- **Extracción de datos** desde dos fuentes (APIs) con formato estandarizado (Yahoo Finance y Alpha Vantage)
+- **Análisis estadístico** automático de series de precios
+- **Gestión de carteras** con cálculos estadísticos
+- **Simulación de Monte Carlo** para proyecciones
+- **Generación de reportes** en Markdown y visualizaciones
 
 ## Arquitectura
 
@@ -19,9 +40,10 @@ El proyecto está diseñado con las siguientes características:
 - **Abstracción**: Interfaces claras que permiten extensibilidad.
 - **Separación de responsabilidades**: Módulos con funciones bien definidas.
 - **Automatización**: Cálculos estadísticos automáticos.
-- **Configuración centralizada**: Todo los parametros se configura desde `configuracion_parametros.py`.
+- **Configuración centralizada**: Todos los parámetros se configuran desde `configuracion_parametros.py`.
 - **Seguridad**: API keys protegidas en `.env` (no versionado)
-- **Plug and play**: haciendo que tras la instalación sea lo más facil posible su uso.
+- **Plug and play**: Haciendo que tras la instalación sea lo más fácil posible su uso.
+
 ## Instalación
 
 ### Requisitos Previos
@@ -55,6 +77,7 @@ El proyecto está diseñado con las siguientes características:
    ```bash
    pip install -r requirements.txt
    ```
+
 ### Archivo `.env`
 
 Para proteger tus API keys, usa el archivo `.env`:
@@ -72,6 +95,7 @@ Para proteger tus API keys, usa el archivo `.env`:
 3. El archivo `.env` está en `.gitignore` y **NO se subirá a GitHub**.
 
 **Importante**: Las API keys se cargan automáticamente desde `.env` cuando ejecutas `main.py`. No necesitas modificar código.
+
 ### Verificación del Entorno
 
 Después de la instalación, puedes verificar que todo esté correcto:
@@ -87,7 +111,7 @@ Este script verifica:
 - Archivos necesarios.
 - Configuración básica.
 
-##  Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 Tarea1_MIAX/
@@ -110,9 +134,8 @@ Tarea1_MIAX/
 └── README.md               # Este archivo
 ```
 
-##  Uso
+## Uso
 
-### Configuración Rápida
 
 1. **Configurar API Keys (opcional)**:
    ```bash
@@ -133,7 +156,7 @@ Tarea1_MIAX/
    - `FECHA_INICIO_EXTRACCION` / `FECHA_FIN_EXTRACCION`: Período de datos
    - `DIAS_MONTE_CARLO`: Días a simular hacia adelante
    - `NUM_SIMULACIONES_MONTE_CARLO`: Número de simulaciones
-   - Y muchos más parámetros, todos ellos explicados en el siguiente punto, así como ejemplo de otras posibles carteras.
+   - Y muchos más parámetros así como ejemplo de otras posibles carteras.
 
 3. **Ejecutar**:
    ```bash
@@ -148,7 +171,7 @@ El script ejecutará automáticamente:
 - Visualizaciones (gráficos guardados en `plots/`).
 - Simulación de Monte Carlo con gráficos.
 
-##  Configuración Detallada
+## Configuración Detallada
 
 ### Archivo `configuracion_parametros.py`
 
@@ -161,7 +184,7 @@ Este es el archivo central de configuración. Aquí puedes especificar:
 #### Períodos de Tiempo
 - `FECHA_INICIO_EXTRACCION`: Fecha de inicio (None = 1 año atrás desde hoy)
 - `FECHA_FIN_EXTRACCION`: Fecha de fin (None = hoy)
-- `DIAS_MONTE_CARLO`: Días a simular hacia adelante (default: 252)
+- `DIAS_MONTE_CARLO`: Días a simular hacia adelante (default: 252, un año de trading)
 
 #### Monte Carlo
 - `TIPO_MONTE_CARLO`: Tipo de simulación ("cartera", "accion_individual", "todos_los_elementos", "seleccion_elementos")
@@ -184,6 +207,8 @@ Este es el archivo central de configuración. Aquí puedes especificar:
 - `TASA_LIBRE_RIESGO`: Tasa libre de riesgo (default: 0.02 = 2%)
 - `RUTA_GUARDADO_GRAFICOS`: Carpeta para guardar gráficos (default: "plots")
 - `MOSTRAR_GRAFICOS`: Mostrar gráficos en pantalla (default: False)
+- `INCLUIR_ESTADISTICAS`: Incluir estadísticas detalladas en el reporte (default: True)
+- `INCLUIR_ADVERTENCIAS`: Incluir advertencias en el reporte (default: True)
 
 #### Limpieza de Datos
 - `ELIMINAR_DUPLICADOS`: Eliminar puntos duplicados (default: True)
@@ -195,70 +220,88 @@ Este es el archivo central de configuración. Aquí puedes especificar:
 - `MAX_WORKERS_EXTRACCION`: Número máximo de workers paralelos (default: 5)
 
 #### Datos Adicionales
-- `EXTRAER_DATOS_FUNDAMENTALES`: Extraer datos fundamentales (P/E, P/B, etc.) (default: False)
+- `EXTRAER_DATOS_FUNDAMENTALES`: Extraer datos fundamentales (P/E, P/B, etc.) (default: True)
 - `EXTRAER_DIVIDENDOS`: Extraer historial de dividendos (default: False)
 - `EXTRAER_INDICADORES_TECNICOS`: Extraer indicadores técnicos (default: False)
+- `INDICADORES_TECNICOS`: Lista de indicadores técnicos a calcular si `EXTRAER_INDICADORES_TECNICOS = True` (ej: `["RSI", "MACD", "SMA_50"]`)
 
 **Nota**: Si `EXTRAER_DATOS_FUNDAMENTALES` o `EXTRAER_DIVIDENDOS` son `True`, los datos se imprimirán automáticamente por pantalla.
 
-##  Extractores de Datos
+## Módulos de `src/` en Orden de Ejecución
 
-El proyecto soporta múltiples fuentes de datos con **formato de salida estandarizado**:
+Los módulos se ejecutan en el siguiente orden cuando se corre `main.py`:
 
-### Yahoo Finance (Por defecto, sin API key)
-- **Método principal**: Usa la librería `yfinance` (más robusta y mantenida)
-- **Fallback automático**: Si `yfinance` falla, usa requests directos a la API de Yahoo Finance
-- **Preferencia de datos**: Prioriza datos ajustados (Adj Close) cuando están disponibles
-- **Advertencia**: Si solo hay datos sin ajustar, se muestra un mensaje de advertencia
+### 1. `validation.py` - Validación de Configuración
+
+**Cuándo se ejecuta**: Al inicio de `main.py`, antes de cualquier extracción de datos.
+
+**Función principal**:
+- **`validar_configuracion()`**: Valida que todos los parámetros en `configuracion_parametros.py` sean correctos
+- Verifica tipos de datos, rangos válidos, y consistencia entre parámetros
+- Retorna lista de advertencias si encuentra problemas
+
+**Ejemplo de validaciones**:
+- Verifica que los pesos de la cartera sumen ≤ 1.0
+- Comprueba que los símbolos de Monte Carlo existan en los datos extraídos
+- Valida que las API keys estén presentes cuando se necesitan
+
+### 2. `extractor.py` - Extractores de Datos Multi-API
+
+**Cuándo se ejecuta**: Después de la validación, se configuran los extractores y luego se usan para extraer datos.
+
+**Clases principales**:
+
+**`DataExtractor`** (clase abstracta):
+- Interfaz base: `fetch_historical_prices()` y `fetch_multiple_series()`
+- Garantiza que todos los extractores devuelvan `PriceSeries` estandarizado
+
+**`YahooFinanceExtractor`**:
+- Método principal: Usa la librería `yfinance` (más robusta y mantenida)
+- Fallback: Si `yfinance` falla, usa requests directos a la API de Yahoo Finance
+- Preferencia: Prioriza datos ajustados (Adj Close) cuando están disponibles
 - No requiere API key
+- Soporta extracción paralela
 
-```python
-extractor = DataExtractorFactory.create_yahoo_extractor()
-serie = extractor.fetch_historical_prices(simbolo="AAPL")
-```
+**`AlphaVantageExtractor`**:
+- Usa la API REST de Alpha Vantage
+- Preferencia: Intenta usar `TIME_SERIES_DAILY_ADJUSTED` (datos ajustados) primero
+- Fallback: Si no hay datos ajustados, usa `TIME_SERIES_DAILY`
+- Requiere API key (máximo 5 llamadas/minuto en plan free)
 
-### Alpha Vantage (Requiere API key)
-- **Preferencia de datos**: Intenta usar `TIME_SERIES_DAILY_ADJUSTED` (datos ajustados) primero
-- **Fallback**: Si no hay datos ajustados disponibles, usa `TIME_SERIES_DAILY` (datos sin ajustar)
-- **Límites**: Máximo 5 llamadas por minuto en plan free (puede causar errores 429 si se excede)
-- **Advertencia**: Si solo hay datos sin ajustar, se muestra un mensaje de advertencia
+**`MultiAPIExtractor`**:
+- Permite usar múltiples APIs simultáneamente
+- Mapea símbolos específicos a APIs específicas según `MAPEO_SIMBOLO_API`
+- Utiliza un extractor por defecto para símbolos no mapeados
+- Ideal cuando diferentes APIs tienen mejor cobertura para ciertos activos
 
-```python
-# La API key se carga desde .env automáticamente
-extractor = DataExtractorFactory.create_alphavantage_extractor(clave_api="TU_API_KEY")
-serie = extractor.fetch_historical_prices(simbolo="AAPL")
-```
+**`DataExtractorFactory`**:
+- Factory pattern para crear extractores de forma simplificada
+- Métodos: `create_yahoo_extractor()`, `create_alphavantage_extractor()`, `get_default_extractor()`
 
-### Uso de Múltiples APIs Simultáneamente
+**Métodos opcionales** (si están habilitados en configuración):
+- `fetch_fundamental_data()` - Datos fundamentales (P/E, P/B, etc.)
+- `fetch_dividend_data()` - Historial de dividendos
+- `fetch_technical_indicators()` - Indicadores técnicos (RSI, MACD, etc.)
 
-El proyecto permite obtener datos de **diferentes APIs al mismo tiempo** usando `MultiAPIExtractor`. Esto se configura automáticamente en `main.py` si especificas `MAPEO_SIMBOLO_API` en `configuracion_parametros.py`:
+### 3. `indices.py` - Utilidades para Índices Bursátiles
 
-**Cómo funciona**:
-- `MultiAPIExtractor` mantiene un mapeo de símbolos a extractores específicos
-- Si un símbolo está mapeado, usa ese extractor específico
-- Si un símbolo NO está mapeado, usa el extractor por defecto (`API_POR_DEFECTO`)
-- Permite optimizar: usar Alpha Vantage para acciones específicas, Yahoo para el resto, etc.
+**Cuándo se ejecuta**: Después de configurar extractores, se usan para extraer índices antes que las acciones.
 
-```python
-# En configuracion_parametros.py
-API_POR_DEFECTO = "yahoo"  # API por defecto para símbolos no mapeados
+**Funciones principales**:
+- **`INDICES_COMUNES`**: Diccionario con índices populares y sus símbolos en Yahoo Finance
+  - Índices de EE.UU.: S&P 500, Dow Jones, NASDAQ, NASDAQ 100, Russell 2000, VIX
+  - Índices internacionales: FTSE 100, DAX, CAC 40, Nikkei 225, Shanghai Composite, Hang Seng
+  - ETFs de índices: SPY, QQQ, DIA, IWM
+- **`get_index_symbol()`**: Obtiene el símbolo de un índice por su nombre
+- **`get_index_info()`**: Obtiene información completa (nombre, descripción) de un índice
+- **`importar_indice()`**: Importa datos de un índice específico
+- **`importar_indices()`**: Importa múltiples índices simultáneamente (con soporte paralelo)
 
-MAPEO_SIMBOLO_API = {
-    "AAPL": "yahoo",
-    "MSFT": "alphavantage",  # Si tienes API key de Alpha Vantage
-    "GOOGL": "alphavantage",  # Si tienes API key de Alpha Vantage
-}
-```
+### 4. `data_classes.py` - Estructuras de Datos Estandarizadas
 
-**Nota**: Si `MAPEO_SIMBOLO_API` está vacío, se usa directamente el extractor por defecto (más eficiente).
+**Cuándo se ejecuta**: Los datos extraídos se convierten a `PriceSeries`, y luego se limpian usando los métodos de esta clase.
 
-##  Características Principales
-
-### Módulos en `src/`
-
-#### `data_classes.py` - Estructuras de Datos Estandarizadas
-
-Define las estructuras de datos fundamentales del proyecto:
+**Clases principales**:
 
 **`PricePoint`** (dataclass):
 - Representa un punto de precio en el tiempo
@@ -279,37 +322,11 @@ Define las estructuras de datos fundamentales del proyecto:
   - `plot_monte_carlo()` - Visualización de la simulación
   - `to_dataframe()` - Conversión a pandas DataFrame
 
-#### `extractor.py` - Extractores de Datos Multi-API
+### 5. `portfolio.py` - Gestión de Carteras
 
-Sistema modular para obtener datos de múltiples fuentes con formato estandarizado:
+**Cuándo se ejecuta**: Después de limpiar los datos, se crea la cartera y se realizan los análisis.
 
-**`DataExtractor`** (clase abstracta):
-- Interfaz base: `fetch_historical_prices()` y `fetch_multiple_series()`
-- Garantiza que todos los extractores devuelvan `PriceSeries` estandarizado
-
-**`YahooFinanceExtractor`**:
-- **Método principal**: Usa la librería `yfinance` (más robusta y mantenida)
-- **Fallback**: Si `yfinance` falla, usa requests directos a la API de Yahoo Finance
-- **Preferencia**: Prioriza datos ajustados (Adj Close) cuando están disponibles
-- No requiere API key
-
-**`AlphaVantageExtractor`**:
-- Usa la API REST de Alpha Vantage
-- **Preferencia**: Intenta usar `TIME_SERIES_DAILY_ADJUSTED` (datos ajustados) primero
-- **Fallback**: Si no hay datos ajustados, usa `TIME_SERIES_DAILY`
-- Requiere API key (máximo 5 llamadas/minuto en plan free)
-
-**`MultiAPIExtractor`**:
-- Permite usar múltiples APIs simultáneamente
-- Mapea símbolos específicos a APIs específicas
-- Utiliza un extractor por defecto para símbolos no mapeados
-- Ideal cuando diferentes APIs tienen mejor cobertura para ciertos activos
-
-**`DataExtractorFactory`**:
-- Factory pattern para crear extractores de forma simplificada
-- Métodos: `create_yahoo_extractor()`, `create_alphavantage_extractor()`, `get_default_extractor()`
-
-#### `portfolio.py` - Gestión de Carteras
+**Clase principal**:
 
 **`Portfolio`** (dataclass):
 - Representa una cartera de valores con pesos asignados
@@ -323,7 +340,11 @@ Sistema modular para obtener datos de múltiples fuentes con formato estandariza
   - `plot_monte_carlo()` - Visualiza simulaciones con trayectorias completas, percentiles y estadísticas
   - `plots_report()` - Genera múltiples visualizaciones (valor de cartera, composición, retornos, distribución, correlaciones)
 
-#### `report.py` - Generación de Reportes
+### 6. `report.py` - Generación de Reportes
+
+**Cuándo se ejecuta**: Después de crear la cartera, se genera el reporte en Markdown.
+
+**Función principal**:
 
 **`generate_report()`** (función):
 - Genera reportes completos en formato Markdown
@@ -334,78 +355,39 @@ Sistema modular para obtener datos de múltiples fuentes con formato estandariza
   - Advertencias (datos faltantes, períodos diferentes, pesos que no suman 100%)
   - APIs utilizadas para cada símbolo
 - Parámetros: `tasa_libre_riesgo`, `incluir_estadisticas`, `incluir_advertencias`
+- El reporte se guarda automáticamente en `portfolio_report.md`
 
-#### `indices.py` - Utilidades para Índices Bursátiles
+### 7. Visualizaciones y Monte Carlo
 
-- **`INDICES_COMUNES`**: Diccionario con índices populares y sus símbolos en Yahoo Finance
-  - Índices de EE.UU.: S&P 500, Dow Jones, NASDAQ, NASDAQ 100, Russell 2000, VIX
-  - Índices internacionales: FTSE 100, DAX, CAC 40, Nikkei 225, Shanghai Composite, Hang Seng
-  - ETFs de índices: SPY, QQQ, DIA, IWM
-- **`get_index_symbol()`**: Obtiene el símbolo de un índice por su nombre
-- **`get_index_info()`**: Obtiene información completa (nombre, descripción) de un índice
-- **`fetch_index()`**: Obtiene datos de un índice usando un extractor
+**Cuándo se ejecuta**: Al final del proceso, después de generar el reporte.
 
-#### `__init__.py` - Inicialización del Paquete
+**Visualizaciones** (`portfolio.py`):
+
+- Generan automáticamentelos siguientes gráficos con `plots_report()`:
+  - Evolución del valor de la cartera
+  - Composición (pie chart)
+  - Retornos diarios
+  - Distribución de retornos
+  - Comparación de holdings
+  - Matriz de correlación
+- Gráficos guardados en la carpeta especificada en `RUTA_GUARDADO_GRAFICOS`
+
+
+**Simulación de Monte Carlo**:
+- Se ejecuta según `TIPO_MONTE_CARLO` en la configuración
+- Puede simular: cartera completa, acción individual, todos los elementos, o selección específica
+- Considera correlaciones entre activos para simulaciones de cartera
+- Genera gráficos con la distibución obtenida, trayectorias, percentiles y bandas de confianza (si están habilitadas)
+
+### `__init__.py` - Inicialización del Paquete
 
 - Define `src/` como un paquete Python
 - Incluye la versión del proyecto: `__version__ = "0.1.0"`
 
-### Simulación de Monte Carlo
 
-```python
-# Simulación para la cartera completa
-resultados = cartera.monte_carlo_simulation(
-    dias=252,              # Días a simular
-    simulaciones=1000,     # Número de simulaciones
-    valor_inicial=10000    # Valor inicial
-)
 
-# Visualizar resultados
-cartera.plot_monte_carlo(dias=252, simulaciones=1000, mostrar=False)
-```
 
-##  Reportes
-
-### Reporte en Markdown
-
-El reporte se genera automáticamente al ejecutar `main.py` y se guarda en `portfolio_report.md`.
-
-También puedes generarlo programáticamente:
-
-```python
-from src.report import generate_report
-
-reporte = generate_report(
-    cartera,
-    tasa_libre_riesgo=0.02,
-    incluir_estadisticas=True,
-    incluir_advertencias=True
-)
-print(reporte)
-```
-
-El reporte incluye:
-- Composición de la cartera
-- Estadísticas agregadas (retorno, volatilidad, Sharpe, etc.)
-- Estadísticas por holding individual
-- Advertencias y validaciones
-- APIs utilizadas para cada símbolo
-
-### Visualizaciones
-
-```python
-cartera.plots_report(ruta_guardado="plots", mostrar=False)
-```
-
-Genera automáticamente:
-- Evolución del valor de la cartera
-- Composición (pie chart)
-- Retornos diarios
-- Distribución de retornos
-- Comparación de holdings
-- Matriz de correlación
-
-##  Limpieza y Preprocesado
+## Limpieza y Preprocesado
 
 El método `clean_data()` de `PriceSeries` realiza una limpieza exhaustiva de datos:
 
@@ -427,7 +409,7 @@ serie.clean_data(
 
 Esto se ejecuta automáticamente en `main.py` según la configuración en `configuracion_parametros.py`.
 
-##  Notas Importantes
+## Notas Importantes
 
 ### Datos Ajustados (Adjusted Close)
 
@@ -456,13 +438,15 @@ Si un extractor no encuentra datos ajustados, usará datos sin ajustar y mostrar
 - **Configuración centralizada**: Todo se configura desde `configuracion_parametros.py`, no necesitas modificar código
 - **Ejecución simple**: Solo ejecuta `python main.py` después de configurar
 - **Multi-API**: Puedes usar múltiples APIs simultáneamente mapeando símbolos específicos a APIs específicas
+- **Extracción paralela**: Soporte para extracción de datos en paralelo para mejorar el rendimiento
+- **Validación automática**: El sistema valida automáticamente la configuración antes de ejecutar
 
 
 ## Licencia
 
 Ver [LICENSE](LICENSE) para más detalles.
 
-##  Contribuciones
+## Contribuciones
 
 Este es un proyecto educativo. Las mejoras y sugerencias son bienvenidas.
 

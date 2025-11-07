@@ -125,7 +125,7 @@ PESOS_CARTERA: Dict[str, float] = {
 # Opciones: 
 #   - 'cartera' (simula la cartera completa)
 #   - 'accion_individual' (simula una acción específica)
-#   - 'todos_los_elementos' (simula todos los holdings de la cartera)
+#   - 'todos_los_elementos' (simula todos los holdings de la cartera de manera separada sin tener en cuenta los pesos)
 #   - 'seleccion_elementos' (simula una selección específica de holdings)
 TIPO_MONTE_CARLO: str = "cartera"
 
@@ -202,10 +202,10 @@ INDICADORES_TECNICOS: List[str] = [
 
 
 # ============================================
-# CONFIGURACIONES PREDEFINIDAS (EJEMPLOS)
+# CONFIGURACIONES EJEMPLOS
 # ============================================
 
-# Puedes descomentar una de estas configuraciones como punto de partida y añadir los indices y tickets arriba:
+# Puedes inspirarte en alguna de estas configuraciones para probar las diferentes funcionalidades y añadir los indices y tickets arriba:
 
 # CONFIGURACIÓN CONSERVADORA (Índices y blue chips)
 # TICKERS_ACCIONES = ["AAPL", "MSFT", "JNJ", "PG", "KO"]
