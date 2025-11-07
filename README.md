@@ -125,8 +125,12 @@ Tarea1_MIAX/
 │   └── validation.py       # Validación del documento configuración_parametros
 ├── configuracion_parametros.py  # CONFIGURACIÓN: Tickers, índices, períodos, etc.  (Todos los parametros más importantes para ser plug and play)
 ├── main.py                  # Script principal (ejecuta todo automáticamente solo con poner 'python main.py' )
+├──docs/                    #carpeta de documentación
+│   ├──CLASS_DIAGRAM.md     # Descripción detallada del diagrama de flujo, classes, herencias etc
+│   ├── Diagrama de flujo.jpg # Mapa conceptual simple del diagrama de flujo
 ├── .env.example            # Plantilla para API keys (copiar a .env)
 ├── .env                    # API keys reales (NO se sube a GitHub)
+├── .gitignore
 ├── venv/                   # Entorno virtual
 ├── requirements.txt        # Dependencias del proyecto
 ├── check_setup.py    # Script de verificación del entorno
