@@ -1,0 +1,14 @@
+# Core dependencies
+pandas>=2.0.0
+numpy>=1.24.0
+requests>=2.31.0
+yfinance>=0.2.0  # Para extracción de datos de Yahoo Finance
+python-dotenv>=1.0.0  # Para cargar variables de entorno desde .env
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Optional: for structure diagrams
+# fossflow>=0.1.0
+
