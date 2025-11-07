@@ -54,7 +54,7 @@ El proyecto está diseñado con **buenas prácticas** y **principios sólidos de
    pip install -r requirements.txt
    ```
 
-### Instalación Automática (Recomendado)
+### Instalación Automática usar los scripts de la cappeta set up:
 
 **Windows:**
 ```bash
@@ -68,10 +68,10 @@ chmod +x setup.sh
 ```
 
 El script automáticamente:
-- ✅ Verifica que Python esté instalado
-- ✅ Crea el entorno virtual
-- ✅ Instala todas las dependencias
-- ✅ Crea el archivo `.env` desde `.env.example`
+- Verifica que Python esté instalado
+- Crea el entorno virtual
+- Instala todas las dependencias
+- Crea el archivo `.env` desde `.env.example`
 
 ### Verificación del Entorno
 
